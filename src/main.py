@@ -1,12 +1,11 @@
-from app import viewConsole
-from cipher import vernam
+import vernam
+import controller
+import console_view
 
+if __name__ == '__main__':
+    cv = console_view.ConsoleView()
+    encrypter = vernam.VernamEncrypter()
+    descriptor = vernam.VernamDescriptor()
+    app = controller.Controller(cv, encrypter, descriptor)
 
-def main():
-    message = input('Введите сообщение: ')
-    encription = vernam.VernamEncrypter(message)
-    enc, key, key_binary, log_enc, log_enc_ascii = encription.process_enryption()
-    print(enc, key, key_binary, log_enc, log_enc_ascii)
-
-if __name__ == "__main__":
-    main()
+    app.run()
