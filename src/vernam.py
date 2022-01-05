@@ -65,7 +65,10 @@ class VernamDescriptor(VernamEncrypter):
     def __init__(self):
         super().__init__()
 
-    def convert_char_to_int(self, data) -> list:
+    def _convert_char_to_int(self, data) -> list:
+        """
+        Перевод в двоичное сообщение
+        """
         buff = []
         for i in data:
             for key, char in self.alphabet_dict.items():
@@ -73,7 +76,7 @@ class VernamDescriptor(VernamEncrypter):
                     buff.append(bin(key))
         return buff
 
-    def int_to_ascii(self, data) -> str:
+    def _int_to_ascii(self, data) -> str:
         """Возвращает расшифрованное сообщение"""
         buff = []
         for i in range(len(data)):
@@ -81,8 +84,8 @@ class VernamDescriptor(VernamEncrypter):
         return ''.join(buff)
     
     def process_description(self, data, key):
-        message_bin = self.convert_char_to_int(data)
+        message_bin = self._convert_char_to_int(data)
         key_bin = self._chr_to_binary(key)
         xor = self._encryption(message_bin, key_bin)
-        descripted_message = self.int_to_ascii(xor)
+        descripted_message = self._int_to_ascii(xor)
         return descripted_message
